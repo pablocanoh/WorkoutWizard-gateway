@@ -18,12 +18,12 @@ public class WorkoutController {
     private WorkoutClient workoutClient;
 
     @GetMapping("diary/active")
-    public WorkoutDiary getActiveDiary() {
-        return workoutClient.getActiveDiary();
+    public WorkoutDiary getActiveDiary(@RequestHeader("Authorization") String jwtToken) {
+        return workoutClient.getActiveDiary(jwtToken);
     }
 
     @PostMapping
-    public UUID addWorkout(@RequestBody AddWorkoutRequest workout) throws JsonProcessingException {
-        return workoutClient.addWorkout(workout);
+    public UUID addWorkout(@RequestBody AddWorkoutRequest workout, @RequestHeader("Authorization") String jwtToken) throws JsonProcessingException {
+        return workoutClient.addWorkout(workout, jwtToken);
     }
 }

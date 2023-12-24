@@ -7,7 +7,15 @@ import com.example.routineclient.dtos.ExperienceLevel;
 import com.example.routineclient.dtos.Routine;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -28,8 +36,8 @@ public class RoutineController {
     }
 
     @GetMapping("/latest")
-    public Optional<Routine> getLatest() {
-        return routineClient.getLatest();
+    public Optional<Routine> getLatest(@RequestHeader("Authorization") String jwtToken) {
+        return routineClient.getLatest(jwtToken);
     }
 
     @GetMapping("/exercise")
@@ -38,12 +46,12 @@ public class RoutineController {
     }
 
     @GetMapping("/{routineId}")
-    public Routine get(@PathVariable UUID routineId) {
-        return routineClient.getRoutine(routineId);
+    public Routine get(@PathVariable UUID routineId, @RequestHeader("Authorization") String jwtToken) {
+        return routineClient.getRoutine(routineId, jwtToken);
     }
 
     @PostMapping
-    public UUID create(@RequestBody Routine routine) throws JsonProcessingException {
-        return routineClient.create(routine);
+    public UUID create(@RequestBody Routine routine, @RequestHeader("Authorization") String jwtToken) throws JsonProcessingException {
+        return routineClient.create(routine, jwtToken);
     }
 }

@@ -30,7 +30,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t pcanohuoc/gateway-management:latest \
-            --build-arg JAR_FILE=routine-core/build/libs/*.jar \
+            --build-arg JAR_FILE=build/libs/*.jar \
             .
 
       - name: Publish Docker image

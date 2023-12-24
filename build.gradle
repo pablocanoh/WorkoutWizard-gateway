@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.1'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'maven-publish'
 }
 
 group = 'com.example'
@@ -20,22 +21,43 @@ configurations {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven {
+        name = 'WorkoutWizard-WorkoutManagement'
+        url = uri("https://maven.pkg.github.com/pablocanoh/WorkoutWizard-WorkoutManagement") // Reemplaza con tu usuario y repo
+        credentials {
+            username = System.getenv("GITHUB_USERNAME")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
+    maven {
+        name = 'GitHubPackages-WorkoutWizard-RoutineManagment'
+        url = uri("https://maven.pkg.github.com/pablocanoh/WorkoutWizard-RoutineManagment")
+        credentials {
+            username = System.getenv("GITHUB_USERNAME")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
+    maven {
+        name = 'GitHubPackages-WorkoutWizard-commons'
+        url = uri("https://maven.pkg.github.com/pablocanoh/WorkoutWizard-commons")
+        credentials {
+            username = System.getenv("GITHUB_USERNAME")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-security:3.2.1"
     implementation 'org.springframework.boot:spring-boot-starter-web:3.2.1'
     implementation "io.jsonwebtoken:jjwt:0.12.3"
-    implementation("edu.uoc:routine-client:0.0.1-SNAPSHOT")
+    implementation("edu.uoc:routine-client:1.0.0-SNAPSHOT")
     implementation("edu.uoc:workout-client:0.0.1-SNAPSHOT")
-    implementation("edu.uoc:WorkoutWizard-commons:1.0-SNAPSHOT")
+    implementation("edu.uoc:workoutwizard-commons:1.0-SNAPSHOT")
     implementation "com.fasterxml.jackson.core:jackson-databind:2.16.0"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.0"
 
-
     compileOnly 'org.projectlombok:lombok:1.18.26'
-
-//    developmentOnly 'org.springframework.boot:spring-boot-docker-compose:3.1.6'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
 

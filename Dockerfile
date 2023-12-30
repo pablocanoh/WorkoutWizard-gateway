@@ -13,8 +13,10 @@ COPY ${JAR_FILE} /app/spring-boot-application.jar
 # Define el directorio de trabajo
 WORKDIR /app
 
+ENV APP_PORT=8084
+
 # Expone el puerto en el que se ejecutará la aplicación
-EXPOSE 8084
+EXPOSE ${APP_PORT}
 
 # Comando para ejecutar la aplicación
 CMD ["java", "-jar", "-Dspring.profiles.active=prod", "spring-boot-application.jar"]
